@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العرض التقديمي الشامل - مشروع TrustFix</title>
+    <style>
+        :root {
+            --bg-color: #0F172A;
+            --card-bg: #1E293B;
+            --card-dark: #0B1120;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent: #38BDF8;
+            --flutter-color: #38BDF8;
+            --backend-color: #10B981;
+            --ai-color: #F43F5E;
+            --data-color: #F59E0B;
+            --border-color: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+
+        /* شريط التنقل العلوي للعرض التقديمي */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            transition: all 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background-color: rgba(56, 189, 248, 0.15);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* تصميم الشرائح (Slides) */
+        .slide {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 45px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            border-right: 6px solid var(--accent);
+            position: relative;
+        }
+
+        .slide-badge {
+            display: inline-block;
+            background-color: var(--card-dark);
+            color: var(--accent);
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .slide-title {
+            font-size: 28px;
+            color: var(--text-main);
+            margin: 0 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* الشبكات والبطاقات الداخلية */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .sub-card {
+            background-color: var(--card-dark);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent);
+        }
+
+        .sub-card h3 {
+            margin-top: 0;
+            color: var(--accent);
+            font-size: 19px;
+        }
+
+        .sub-card p {
+            color: #CBD5E1;
+            margin-bottom: 0;
+            font-size: 15px;
+        }
+
+        .platform-pill {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            border-right: 4px solid var(--flutter-color);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .platform-pill h4 {
+            margin: 0 0 5px 0;
+            color: var(--flutter-color);
+            font-size: 16px;
+        }
+
+        .platform-pill p {
+            margin: 0;
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+
+        /* ألوان التراكات والمميزات */
+        .border-flutter { border-top-color: var(--flutter-color) !important; }
+        .border-backend { border-top-color: var(--backend-color) !important; }
+        .border-ai { border-top-color: var(--ai-color) !important; }
+        .border-data { border-top-color: var(--data-color) !important; }
+
+        .text-flutter { color: var(--flutter-color) !important; }
+        .text-backend { color: var(--backend-color) !important; }
+        .text-ai { color: var(--ai-color) !important; }
+        .text-data { color: var(--data-color) !important; }
+
+        /* شرح المميزات التفصيلي */
+        .feature-item {
+            background-color: var(--card-dark);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-right: 4px solid var(--accent);
+        }
+
+        .feature-item h3 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: center;
+        }
+
+        .step-pill {
+            background-color: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .arrow {
+            color: var(--backend-color);
+            font-weight: bold;
+        }
+
+        /* الجدول الزمني (Timeline) */
+        .timeline {
+            position: relative;
+            padding-right: 25px;
+            border-right: 3px solid var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            background-color: var(--card-dark);
+            padding: 22px 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--accent);
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            right: -35px;
+            top: 26px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 3px solid var(--bg-color);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-badge {
+            font-size: 13px;
+            color: var(--backend-color);
+            background-color: rgba(16, 185, 129, 0.1);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        .timeline-duration {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .timeline-item h4 {
+            margin: 0 0 10px 0;
+            font-size: 19px;
+            color: var(--text-main);
+        }
+
+        .timeline-list {
+            margin: 0;
+            padding-right: 20px;
+            color: #CBD5E1;
+            font-size: 15px;
+        }
+
+        .timeline-list li {
+            margin-bottom: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 20px;
+            color: var(--text-muted);
+            font-size: 15px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-dark);
+        }
+
+        .credits-box {
+            display: inline-flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .credit-badge {
+            background-color: var(--card-bg);
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        .credit-badge strong {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنقل السريع -->
+    <nav class="navbar">
+        <div class="brand">🚀 TrustFix Presentation</div>
+        <div class="nav-links">
+            <a href="#slide-intro">1. المقدمة والأهداف</a>
+            <a href="#slide-problem">2. المشكلة</a>
+            <a href="#slide-audience">3. الفئات المستهدفة</a>
+            <a href="#slide-features">4. المميزات التفصيلية</a>
+            <a href="#slide-plan">5. خطة العمل</a>
+            <a href="#slide-timeline">6. الخطة الزمنية (حتى مارس)</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- الشريحة 1: المقدمة والأهداف -->
+        <section class="slide" id="slide-intro">
+            <span class="slide-badge">الشريحة 01 / نظرة عامة</span>
+            <h2 class="slide-title">🌟 مقدمة المشروع وأهدافه الاستراتيجية</h2>
+            <p style="font-size: 17px; color: #CBD5E1; margin-bottom: 20px;">
+                <strong>TrustFix</strong> هو منظومة ذكية متكاملة لإدارة خدمات الصيانة والمرافق، تجمع بين قوة الذكاء الاصطناعي لتشخيص الأعطال، ونظام الدفع الضامن (Escrow) لحماية المعاملات المالية، ومؤشر الثقة (Trust Score) لضمان أعلى معايير الجودة، وتعمل المنظومة من خلال <strong>3 تطبيقات موبايل مترابطة بالإضافة إلى ويب أبلكيشن لوحة التحكم (Dashboard)</strong>:
+            </p>
+
+            <!-- استعراض المنصات الأربع -->
+            <div class="grid-4">
+                <div class="platform-pill">
+                    <h4>📱 1. تطبيق العميل / المنشأة</h4>
+                    <p>لطلب الصيانة بسهولة عبر التصوير أو التسجيل الصوتي للأفراد والمنشآت.</p>
+                </div>
+                <div class="platform-pill">
+                    <h4>🛠️ 2. تطبيق الفني</h4>
+                    <p>واجهة مبسطة لاستقبال الأعطال، عرض الخريطة، وتأكيد استلام وإنهاء المهام.</p>
+                </div>
+                <div class="platform-pill">
+                    <h4>🏢 3. تطبيق شركة الصيانة</h4>
+                    <p>تطبيق مخصص لشركات الصيانة لمتابعة وإدارة عملياتها وفرقها الميدانية.</p>
+                </div>
+                <div class="platform-pill" style="border-right-color: var(--backend-color);">
+                    <h4 style="color: var(--backend-color);">💻 4. ويب أبلكيشن الداش بورد</h4>
+                    <p>لوحة تحكم شاملة على الويب لإدارة التذاكر، الفنيين، الشكاوى، والتقارير.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="sub-card border-backend">
+                    <h3 class="text-backend">🛡️ بناء الثقة الكاملة</h3>
+                    <p>القضاء على الخوف المتبادل بين العميل والفني من خلال تجميد قيمة الصيانة في حساب وسيط آمن لا يُصرف إلا بعد إتمام العمل بنجاح.</p>
+                </div>
+                <div class="sub-card border-ai">
+                    <h3 class="text-ai">🧠 أتمتة التشخيص بالـ AI</h3>
+                    <p>تمكين أي عميل أو منشأة من طلب الصيانة بمجرد تصوير العطل أو تسجيل مقطع صوتي دون الحاجة لأي خبرة فنية مسبقة.</p>
+                </div>
+                <div class="sub-card border-data">
+                    <h3 class="text-data">📈 الصيانة التنبؤية للمنشآت</h3>
+                    <p>حماية الشركات والمستشفيات من الأعطال المفاجئة عبر التنبؤ بمواعيد الصيانة قبل وقوع العطل الفعلي.</p>
+                </div>
+                <div class="sub-card border-flutter">
+                    <h3 class="text-flutter">⚖️ العدالة وحوكمة الجودة</h3>
+                    <p>فلترة الفنيين باستمرار وترشيح الأكفأ بناءً على تقييمات الأداء الفعلي وعدم تكرار الأعطال.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- الشريحة 2: المشكلة -->
+        <section class="slide" id="slide-problem" style="border-right-color: var(--ai-color);">
+            <span class="slide-badge" style="color: var(--ai-color);">الشريحة 02 / دوافع المشروع</span>
+            <h2 class="slide-title">⚠️ المشكلة التي خُلق من أجلها التطبيق</h2>
+            <div class="grid-2">
+                <div class="sub-card border-ai">
+                    <h3 class="text-ai">1. أزمة الثقة والخوف المتبادل</h3>
+                    <p>العميل يخشى دفع المال والتعرض للنصب أو استلام عمل غير متقن، وفي المقابل يخشى الفني إنجاز شغله ثم مماطلة العميل في سداد حقه المالي.</p>
+                </div>
+                <div class="sub-card border-ai">
+                    <h3 class="text-ai">2. صعوبة توصيف الأعطال فنياً</h3>
+                    <p>العميل لا يعرف كيفية شرح العطل بدقة، مما يؤدي لحضور الفني بدون الأدوات اللازمة أو تقدير خاطئ لدرجة خطورة المشكلة.</p>
+                </div>
+                <div class="sub-card border-ai">
+                    <h3 class="text-ai">3. الحلول المؤقتة وتكرار الأعطال</h3>
+                    <p>غياب الرقابة يسمح لبعض الفنيين بتقديم إصلاحات ظاهرية ("كروتة")، فيعود العطل للظهور بعد أيام دون وجود آلية تحاسب الفني أو تحمي العميل.</p>
+                </div>
+                <div class="sub-card border-ai">
+                    <h3 class="text-ai">4. الخسائر الناتجة عن الأعطال المفاجئة</h3>
+                    <p>في قطاع المنشآت والمستشفيات، انتظار تعطل الأجهزة الحيوية يؤدي لتوقف العمل وخسائر كبيرة نتيجة غياب الصيانة التنبؤية.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- الشريحة 3: الفئات المستهدفة -->
+        <section class="slide" id="slide-audience" style="border-right-color: var(--backend-color);">
+            <span class="slide-badge" style="color: var(--backend-color);">الشريحة 03 / شرائح السوق</span>
+            <h2 class="slide-title">🎯 من يستهدف تطبيق TrustFix؟</h2>
+            <div class="grid-3">
+                <div class="sub-card border-flutter">
+                    <h3 class="text-flutter">🏠 الأفراد والمنشآت (B2C & B2B)</h3>
+                    <p>الأفراد في المنازل، وكذلك المنشآت (كالمستشفيات والمصانع) التي تحتاج إلى نظام تذاكر (Tickets) منظم، وصيانة تنبؤية لأجهزتها، مع ضمان أمان المدفوعات وعزل تام لبيانات كل منشأة.</p>
+                </div>
+                <div class="sub-card border-backend">
+                    <h3 class="text-backend">🏢 شركات الصيانة</h3>
+                    <p>الشركات المقدمة لخدمات الصيانة التي ترغب في إدارة أسطول الفنيين، متابعة الطلبات الجارية والشكاوى عبر تطبيق الشركة.</p>
+                </div>
+                <div class="sub-card border-data">
+                    <h3 class="text-data">🔧 الفنيون المحترفون</h3>
+                    <p>الفنيون الباحثون عن منصة تضمن أتعابهم المالية فور انتهاء العمل، وتكافئ التزامهم وجودة شغلهم بمزيد من الطلبات عبر مؤشر الـ Trust Score.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- الشريحة 4: المميزات التفصيلية -->
+        <section class="slide" id="slide-features">
+            <span class="slide-badge">الشريحة 04 / القيمة التنافسية</span>
+            <h2 class="slide-title">💎 المميزات التنافسية (شرح تفصيلي)</h2>
+
+            <div class="feature-item" style="border-right-color: var(--backend-color);">
+                <h3 class="text-backend">1. نظام الدفع الضامن (Escrow System) المؤمّن</h3>
+                <p>يحمي النظام أموال العميل/المنشأة وأتعاب الفني من خلال حجز القيمة المالية في السيرفر حتى انتهاء المهمة. وتم تأمين هذا المسار برمجياً عبر تقنية <strong>Database Transactions</strong> لضمان إتمام العملية المالية بنسبة 100% أو إلغائها بالكامل (Rollback) في حال انقطاع الإنترنت أثناء الدفع.</p>
+                <div class="flow-steps">
+                    <span class="step-pill">1. العميل يدفع القيمة</span>
+                    <span class="arrow">⬅</span>
+                    <span class="step-pill">2. تجميد المبلغ في الـ Escrow</span>
+                    <span class="arrow">⬅</span>
+                    <span class="step-pill">3. الفني ينجز العمل والعميل يؤكد</span>
+                    <span class="arrow">⬅</span>
+                    <span class="step-pill">4. فك التجميد والتحويل لمحفظة الفني</span>
+                </div>
+            </div>
+
+            <div class="feature-item" style="border-right-color: var(--ai-color);">
+                <h3 class="text-ai">2. التشخيص الذكي والترشيح التلقائي عبر Gemini API</h3>
+                <p>بدلاً من كتابة نصوص معقدة أو اضطرار العميل للبحث يدوياً بين تخصصات الفنيين المختلفة (مثل أقسام التبريد والتكييف، الصيانة الكهربائية، والأعطال الميكانيكية)، يلتقط العميل صورة للعطل أو يسجل مقطعاً صوتياً. يقوم النظام بإرسالها إلى <strong>Gemini API</strong> الذي يحللها بدقة عالية، لا ليعيد فقط ملف <strong>JSON</strong> يوضح نوع العطل، درجة الخطورة، والأدوات المتوقعة، بل ليقوم الذكاء الاصطناعي تلقائياً بفلترة وتوجيه العميل مباشرة إلى قائمة الفنيين المتخصصين بدقة في نوع المشكلة المطلوبة. حيث يربط النظام الشكوى مباشرة بنوع التخصص المطلوب داخل شبكة الفنيين المسجلين، مما يلغي عشوائية البحث اليدوي ويضمن وصول العميل للفني الأكفأ لمشكلته في أسرع وقت ممكن.</p>
+            </div>
+
+            <div class="feature-item" style="border-right-color: var(--data-color);">
+                <h3 class="text-data">3. مؤشر الثقة (Trust Score) ومنع "الكروتة"</h3>
+                <p>يرتبط جدول تذاكر الصيانة بجدول التقييمات بعلاقات مباشرة، بحيث ينعكس تقييم كل عملية فوراً على ملف الفني. ويتميز النظام بتطبيق <strong>خصم قوي جداً</strong> على تقييم الفني في حال <strong>"تكرار نفس العطل"</strong> بعد مغادرته، مما يضمن التزام الفني بأعلى جودة ممكنة.</p>
+            </div>
+
+            <div class="feature-item" style="border-right-color: var(--flutter-color);">
+                <h3 class="text-flutter">4. محرك التوجيه الذكي (Smart Routing) والصيانة التنبؤية</h3>
+                <p><strong>التوجيه الذكي:</strong> يوازن اللوغاريتم بين المسافة والـ Trust Score؛ فيختار الفني الممتاز الأبعد قليلاً بدلاً من الفني القريب ذي التقييم السيء.<br>
+                <strong>الصيانة التنبؤية:</strong> يدرس النظام عوامل الاستهلاك والبيئة (مثل تأثير درجة حرارة الجو على أعطال التكييفات) لتنبيه المنشآت بموعد الصيانة قبل تعطل الجهاز.</p>
+            </div>
+
+            <div class="feature-item" style="border-right-color: #A855F7;">
+                <h3 style="color: #A855F7;">5. عزل البيانات والأمن السيبراني (Data Isolation)</h3>
+                <p>تطبيق معايير صارمة لعزل بيانات الشركات والمنشآت، حيث لا يمكن لمدير شركة (أ) الاطلاع نهائياً على طلبات أو فواتير شركة (ب)، إذ يتم ربط كل استعلام بالـ ID الخاص بالشركة فقط.</p>
+            </div>
+        </section>
+
+        <!-- الشريحة 5: خطة العمل -->
+        <section class="slide" id="slide-plan" style="border-right-color: var(--data-color);">
+            <span class="slide-badge" style="color: var(--data-color);">الشريحة 05 / الهيكلة والتنفيذ</span>
+            <h2 class="slide-title">🛠️ خطة العمل وتوزيع المهام التقنية</h2>
+            <div class="grid-2">
+                <div class="sub-card border-flutter">
+                    <h3 class="text-flutter">📱 فريق الواجهات (3 تطبيقات + Web Dashboard)</h3>
+                    <p>العمل بمعمارية <strong>Clean Architecture</strong> وتوحيد الـ Theme عبر المنصات الأربع مع تخصيص الـ Layout:<br>
+                    • <strong>تطبيق العميل / المنشأة:</strong> شاشة مبسطة لتصوير العطل أو تسجيل الصوت.<br>
+                    • <strong>تطبيق الفني:</strong> شاشة واضحة تعرض العطل والخريطة وزر الموافقة والإنهاء.<br>
+                    • <strong>تطبيق شركة الصيانة:</strong> متابعة وإدارة عمليات الصيانة الميدانية.<br>
+                    • <strong>ويب أبلكيشن الداش بورد:</strong> لوحة تحكم ويب لمتابعة الطلبات الشغالة، الفنيين المتاحين، والشكاوى.</p>
+                </div>
+                <div class="sub-card border-backend">
+                    <h3 class="text-backend">⚙️ فريق Backend & Database</h3>
+                    <p>• بناء قاعدة البيانات وربط جداول التذاكر بجدول الـ Trust Score عبر Relations دقيقة.<br>
+                    • تطوير واجهات البرمجة (APIs) لخدمة الـ 3 تطبيقات وويب الداش بورد.<br>
+                    • برمجة منطق الـ Escrow وتأمينه بنظام الـ Transactions.</p>
+                </div>
+                <div class="sub-card border-ai">
+                    <h3 class="text-ai">🧠 فريق الذكاء الاصطناعي (AI)</h3>
+                    <p>• ربط Gemini API وتصميم الـ Prompts لإخراج نتائج بصيغة JSON وترشيح التخصص المناسب.<br>
+                    • إعداد بيانات محاكاة (Dummy Data) تشمل عوامل مثل الحرارة لبناء نموذج الصيانة التنبؤية.<br>
+                    • تطوير خوارزمية التوجيه الموزونة بين المسافة والتقييم.</p>
+                </div>
+                <div class="sub-card border-data">
+                    <h3 class="text-data">📊 فريق البيانات والأمن السيبراني</h3>
+                    <p>• تصميم معادلة الـ Trust Score وتحديد أوزان الخصم عند تكرار الأعطال.<br>
+                    • تطبيق سياسات عزل البيانات (Data Isolation) ومراجعة صلاحيات الوصول لكل شركة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- الشريحة 6: الخطة الزمنية الممتدة حتى شهر 3 -->
+        <section class="slide" id="slide-timeline" style="border-right-color: var(--flutter-color);">
+            <span class="slide-badge">الشريحة 06 / خارطة الطريق (6 أشهر)</span>
+            <h2 class="slide-title">⏳ الخطة الزمنية للمشروع (أكتوبر 2026 – مارس 2027)</h2>
+            <div class="timeline">
+                
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-badge">الشهر الأول: أكتوبر 2026</span>
+                        <span class="timeline-duration">أسابيع 1 - 4</span>
+                    </div>
+                    <h4>التأسيس، تحليل الأعمال، وبناء المعمارية (Foundation & Architecture)</h4>
+                    <ul class="timeline-list">
+                        <li>توحيد الرؤية العامة للمشروع وتحديد متطلبات شرائح العملاء (الأفراد، المنشآت، وشركات الصيانة).</li>
+                        <li>تجهيز بيئة العمل وتقسيم فولدرات التطبيقات بنظام Clean Architecture وتوحيد الـ Theme.</li>
+                        <li>تصميم مخطط قاعدة البيانات (Schema) وعلاقات الجداول (Relations) وتحديد معادلة الـ Trust Score.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-badge">الشهر الثاني: نوفمبر 2026</span>
+                        <span class="timeline-duration">أسابيع 5 - 8</span>
+                    </div>
+                    <h4>تطوير الواجهات الأربع وبناء النواة البرمجية (UI/UX & Core Backend)</h4>
+                    <ul class="timeline-list">
+                        <li>بناء شاشات الـ 3 تطبيقات (العميل/المنشأة، الفني، شركة الصيانة) بالإضافة إلى ويب أبلكيشن الداش بورد.</li>
+                        <li>برمجة الـ APIs الأساسية لإدارة الطلبات والتقييمات، وتأسيس قواعد عزل البيانات (Data Isolation) بين الشركات.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-badge">الشهر الثالث: ديسمبر 2026</span>
+                        <span class="timeline-duration">أسابيع 9 - 12</span>
+                    </div>
+                    <h4>تطوير محركات الذكاء الاصطناعي ونظام الدفع الضامن (AI & Escrow Logic)</h4>
+                    <ul class="timeline-list">
+                        <li>برمجة دورة حياة الأموال في نظام الـ Escrow (تجميد وتحويل) وتأمينها بالكامل عبر Database Transactions.</li>
+                        <li>ربط Gemini API لتحليل الصور والمقاطع الصوتية، وترشيح التخصص المناسب وإرجاع مخرجات JSON منظمة.</li>
+                        <li>تجهيز الـ Dummy Data (شاملة العوامل البيئية كدرجة الحرارة) لتدريب نموذج الصيانة التنبؤية، وبرمجة خوارزمية التوجيه الذكي.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-badge" style="color: var(--data-color); background-color: rgba(245, 158, 11, 0.1);">الشهر الرابع: يناير 2027</span>
+                        <span class="timeline-duration">أسابيع 13 - 16 (فترة امتحانات نصف العام)</span>
+                    </div>
+                    <h4>الربط المبدئي ومراجعة منتصف المدة (Initial Integration & Mid-Year Review)</h4>
+                    <ul class="timeline-list">
+                        <li>إجراء الربط الأولي بين الـ 3 تطبيقات وويب الداش بورد مع واجهات الـ Backend APIs.</li>
+                        <li>مراجعة جودة الأكواد وتخفيف ضغط المهام مراعاة لفترة امتحانات الفصل الدراسي الأول.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <span class="timeline-badge">الشهر الخامس: فبراير 2027</span>
+                        <span class="timeline-duration">أسابيع 17 - 20</span>
+                    </div>
+                    <h4>التكامل الشامل للنظام والميزات المتقدمة (Full System Integration)</h4>
+                    <ul class="timeline-list">
+                        <li>الربط الكامل بين تطبيقات الموبايل، ويب الداش بورد، السيرفر، ومخرجات الـ AI وخوارزمية التوجيه في مسار عمل حي.</li>
+                        <li>تفعيل نظام الخصم التلقائي القوي في الـ Trust Score عند تكرار الأعطال، وإضافة الميزات التكميلية بمرونة.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item" style="margin-bottom:0;">
+                    <div class="timeline-header">
+                        <span class="timeline-badge" style="color: var(--flutter-color); background-color: rgba(56, 189, 248, 0.1);">الشهر السادس: مارس 2027</span>
+                        <span class="timeline-duration">أسابيع 21 - 24 (التسليم النهائي)</span>
+                    </div>
+                    <h4>اختبار الجودة، فحص الأمان، وتجهيز المناقشة (QA, Security Audit & Final Pitch)</h4>
+                    <ul class="timeline-list">
+                        <li>اختبار السيناريوهات الحرجة (مثل انقطاع الإنترنت أثناء الدفع) للتأكد من كفاءة الـ Rollback في الـ Transactions.</li>
+                        <li>إجراء اختبارات الأمان والتأكد التام من عزل بيانات كل شركة عن الشركات المنافسة (Data Isolation).</li>
+                        <li>إتمام التوثيق النهائي وتجهيز العرض التقديمي والنسخة النهائية للمناقشة.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <div class="footer">
+        <div>منظومة <strong>TrustFix</strong> للصيانة الذكية والدفع الضامن</div>
+        <div class="credits-box">
+            <span class="credit-badge">إدارة المشروع وقيادة الفريق: <strong>سعيد عادل</strong></span>
+            <span class="credit-badge">تصميم العرض: <strong>محمود هشام</strong></span>
+        </div>
+    </div>
+
+</body>
+</html>
